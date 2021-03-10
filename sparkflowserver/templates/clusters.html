@@ -1,0 +1,38 @@
+{% extends "layout.html" %}
+{% block body %}
+<h3>Cluster Pools</h3>
+<a class="btn btn-primary" href="{{ url_for('cluster_creation') }}" role="button">Create New</a>
+<br><br>
+<div class="table-responsive">
+    <table class="table table-striped table-sm">
+      <thead>
+        <tr>
+            <th>ID</th>
+            <th>Updated On</th>
+            <th>Clusters</th>
+            <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for row in data %}
+            <tr>
+                <td>{{row["cluster_pool_id"]}}</td>
+                <td>{{row["update_date"]}}</td>
+                <td>{{row["number_of_clusters"]}}</td>
+                <td><a href="#">Clone</a> | <a class="delete" href="{{ url_for('cluster_pools') }}" id={{row["cluster_pool_id"]}}>Delete</a></td>
+            </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+</div>
+<script type=text/javascript>
+  $('.delete').click(function(){
+    $.ajax({
+      type: 'POST',
+      url: "/delete_cluster",
+      data: {"cluster_pool_id": $(this).attr('id')},
+      dataType: "text"
+    });
+  });
+</script>
+{% endblock %}

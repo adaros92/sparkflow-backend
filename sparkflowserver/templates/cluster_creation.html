@@ -1,0 +1,122 @@
+{% extends "layout.html" %}
+{% block body %}
+<h3>Create cluster pool</h3>
+<br>
+<form action="/create_cluster" method="POST">
+  <h6>Cluster information</h6>
+  <div class="form-row">
+    <div class="col-auto my-1">
+      <div class="form-group">
+        <label for="clusterName">Cluster pool name</label>
+        <input type="text" class="form-control" name="clusterName" id="clusterName" placeholder="Enter a name for the pool">
+      </div>
+    </div>
+    <div class="col-auto my-1">
+      <div class="form-group">
+        <label for="clusterCount">Cluster count</label>
+        <input type="number" name="clusterCount" class="form-control" id="clusterCount" placeholder="# of clusters" min="1" max="25" value="1">
+        <small id="countHelp" class="form-text text-muted">Number of clusters in the pool from 1 to 25</small>
+      </div>
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="col-auto my-1">
+      <label class="mr-sm-2" for="emrReleaseLabel">EMR release label</label>
+      <select class="custom-select mr-sm-2" name="emrReleaseLabel" id="emrReleaseLabel">
+        <option selected value="emr-5.32.0">emr-5.32.0</option>
+        <option value="emr-5.31.0">emr-5.31.0</option>
+        <option value="emr-6.2.0">emr-6.2.0</option>
+      </select>
+      <small id="releaseHelp" class="form-text text-muted">See https://tinyurl.com/fcwbwavd</small>
+    </div>
+    <div class="col-auto my-1">
+      <label class="mr-sm-2" for="autoTerminate">Auto-terminate</label>
+      <select class="custom-select mr-sm-2" name="autoTerminate" id="autoTerminate">
+        <option selected value="True">True</option>
+        <option value="False">False</option>
+      </select>
+    </div>
+    <div class="col-auto my-1">
+      <label class="mr-sm-2" for="terminationProtection">Termination protection</label>
+      <select class="custom-select mr-sm-2" name="terminationProtection" id="terminationProtection">
+        <option value="True">True</option>
+        <option selected value="False">False</option>
+      </select>
+    </div>
+    <div class="col-auto my-1">
+      <div class="form-group">
+        <label for="logUri">EMR log URI</label>
+        <input type="text" class="form-control" name="logUri" id="logUri" value="s3://emr-logs/">
+        <small id="logUriHelp" class="form-text text-muted">S3 path to store logs in</small>
+      </div>
+    </div>
+  </div>
+  <h6>Applications</h6>
+  <div class="form-row">
+    <div class="form-check form-check-inline">
+      <input class="form-check-input" type="checkbox" name="appsSpark" id="appsSpark" value="Spark">
+      <label class="form-check-label" for="appsSpark">Spark</label>
+    </div>
+    <div class="form-check form-check-inline">
+      <input class="form-check-input" type="checkbox" name="appsZeppelin" id="appsZeppelin" value="Zeppelin">
+      <label class="form-check-label" for="appsZeppelin">Zeppelin</label>
+    </div>
+  </div>
+  <br>
+  <h6>AWS configurations</h6>
+  <div class="form-row">
+    <div class="col-auto my-1">
+      <label class="mr-sm-2" for="emrReleaseLabel">Availability zone</label>
+      <select class="custom-select mr-sm-2" name="availabilityZone" id="availabilityZone">
+        <option selected value="us-east-1f">us-east-1f</option>
+        <option value="us-east-1a">us-east-1a</option>
+        <option value="us-west-2">us-west-2</option>
+      </select>
+    </div>
+    <div class="col-auto my-1">
+      <div class="form-group">
+        <label for="ec2InstanceProfile">EC2 instance profile</label>
+        <input type="text" class="form-control" name="ec2InstanceProfile" id="ec2InstanceProfile" value="EMR_EC2_DefaultRole">
+      </div>
+    </div>
+    <div class="col-auto my-1">
+      <div class="form-group">
+        <label for="emrServiceRole">EMR service role</label>
+        <input type="text" class="form-control" name="emrServiceRole" id="emrServiceRole" value="EMR_DefaultRole">
+      </div>
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="col-auto my-1">
+      <div class="form-group">
+        <label for="ec2KeyName">EC2 key name</label>
+        <input type="text" class="form-control" name="ec2KeyName" id="ec2KeyName">
+      </div>
+    </div>
+    <div class="col-auto my-1">
+      <div class="form-group">
+        <label for="ec2SubnetId">EC2 subnet ID</label>
+        <input type="text" class="form-control" name="ec2SubnetId" id="ec2SubnetId">
+      </div>
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="col-auto my-1">
+      <div class="form-group">
+        <label for="driverSecurityGroup">Driver security group</label>
+        <input type="text" class="form-control" name="driverSecurityGroup" id="driverSecurityGroup">
+      </div>
+    </div>
+    <div class="col-auto my-1">
+      <div class="form-group">
+        <label for="executorSecurityGroup">Executor security group</label>
+        <input type="text" class="form-control" name="executorSecurityGroup" id="executorSecurityGroup">
+      </div>
+    </div>
+  </div>
+  <br>
+  <div class="form-row">
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </div>
+</form>
+{% endblock %}
