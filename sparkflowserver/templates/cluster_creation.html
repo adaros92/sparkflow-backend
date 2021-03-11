@@ -5,13 +5,13 @@
 <form action="/create_cluster" method="POST">
   <h6>Cluster information</h6>
   <div class="form-row">
-    <div class="col-auto my-1">
+    <div class="col-8 my-1">
       <div class="form-group">
         <label for="clusterName">Cluster pool name</label>
         <input type="text" class="form-control" name="clusterName" id="clusterName" placeholder="Enter a name for the pool">
       </div>
     </div>
-    <div class="col-auto my-1">
+    <div class="col-4 my-1">
       <div class="form-group">
         <label for="clusterCount">Cluster count</label>
         <input type="number" name="clusterCount" class="form-control" id="clusterCount" placeholder="# of clusters" min="1" max="25" value="1">
@@ -61,6 +61,10 @@
       <input class="form-check-input" type="checkbox" name="appsZeppelin" id="appsZeppelin" value="Zeppelin">
       <label class="form-check-label" for="appsZeppelin">Zeppelin</label>
     </div>
+    <div class="form-check form-check-inline">
+      <input class="form-check-input" type="checkbox" name="appsHive" id="appsHive" value="Hive">
+      <label class="form-check-label" for="appsHive">Hive</label>
+    </div>
   </div>
   <br>
   <h6>AWS configurations</h6>
@@ -87,13 +91,13 @@
     </div>
   </div>
   <div class="form-row">
-    <div class="col-auto my-1">
+    <div class="col-6 my-1">
       <div class="form-group">
         <label for="ec2KeyName">EC2 key name</label>
         <input type="text" class="form-control" name="ec2KeyName" id="ec2KeyName">
       </div>
     </div>
-    <div class="col-auto my-1">
+    <div class="col-6 my-1">
       <div class="form-group">
         <label for="ec2SubnetId">EC2 subnet ID</label>
         <input type="text" class="form-control" name="ec2SubnetId" id="ec2SubnetId">
@@ -101,22 +105,22 @@
     </div>
   </div>
   <div class="form-row">
-    <div class="col-auto my-1">
+    <div class="col-6 my-1">
       <div class="form-group">
         <label for="driverSecurityGroup">Driver security group</label>
         <input type="text" class="form-control" name="driverSecurityGroup" id="driverSecurityGroup">
       </div>
     </div>
-    <div class="col-auto my-1">
+    <div class="col-6 my-1">
       <div class="form-group">
         <label for="executorSecurityGroup">Executor security group</label>
         <input type="text" class="form-control" name="executorSecurityGroup" id="executorSecurityGroup">
       </div>
     </div>
   </div>
-  <br>
   <div class="form-row">
     <button type="submit" class="btn btn-primary">Submit</button>
   </div>
+  <br>
 </form>
 {% endblock %}

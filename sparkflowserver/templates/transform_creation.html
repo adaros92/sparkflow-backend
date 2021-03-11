@@ -1,0 +1,55 @@
+{% extends "layout.html" %}
+{% block body %}
+<h3>Create transform</h3>
+<br>
+<form action="/create_transform" method="POST">
+  <div class="form-row">
+    <div class="col-6 my-1">
+      <div class="form-group">
+        <label for="transformName">Transform Name</label>
+        <input type="text" class="form-control" name="transformName" id="transformName" placeholder="Enter a name for transform">
+      </div>
+    </div>
+    <div class="col-6 my-1">
+      <div class="form-group">
+        <label for="poolId">Cluster pool ID</label>
+        <input type="text" class="form-control" name="poolId" id="poolId" placeholder="Enter pool ID to execute in">
+      </div>
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="col-6 my-1">
+      <div class="form-group">
+        <label for="jarLocation">JAR S3 location</label>
+        <input type="text" class="form-control" name="jarLocation" id="jarLocation" placeholder="S3 path of JAR">
+      </div>
+    </div>
+    <div class="col-6 my-1">
+      <div class="form-group">
+        <label for="mainClass">Main class path</label>
+        <input type="text" class="form-control" name="mainClass" id="mainClass" placeholder="Main class to execute">
+      </div>
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="col-12 my-1">
+      <div class="form-group form-group-lg">
+        <label for="appConfig">Application config</label>
+        <input type="text" class="form-control input-lg" name="appConfig" id="appConfig" placeholder="Application configurations">
+      </div>
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="col-12 my-1">
+      <div class="form-group form-group-lg">
+        <label for="arguments">Spark submit arguments</label>
+        <input type="text" class="form-control input-lg" name="arguments" id="arguments" placeholder="Application arguments">
+      </div>
+    </div>
+  </div>
+  <div class="form-row">
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </div>
+  <br>
+</form>
+{% endblock %}
