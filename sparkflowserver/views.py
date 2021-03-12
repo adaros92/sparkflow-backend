@@ -2,7 +2,7 @@ from flask import url_for, render_template, request, redirect
 from sparkflowtools.utils import aws_lambda
 
 from sparkflowserver import app
-from sparkflowserver.utils import clusters
+from sparkflowserver.utils import clusters, transforms as transform_utils
 
 
 @app.route('/delete_cluster', methods=['POST'])
@@ -13,6 +13,13 @@ def delete_cluster():
         lambda_arn = app.config["CLUSTER_CREATION_LAMBDA"]
         aws_lambda.invoke_function(lambda_arn, payload)
     return redirect(url_for('cluster_pools'))
+
+
+@app.route('/delete_transform', methods=['POST'])
+def delete_transform():
+    """Route to delete a transform from Dynamo"""
+    transform_utils.delete_transform_record(request.form)
+    return redirect(url_for('transforms'))
 
 
 @app.route('/create_cluster', methods=['POST'])
@@ -27,6 +34,8 @@ def create_cluster():
 @app.route('/create_transform', methods=['POST'])
 def create_transform():
     """Route to create a new transform"""
+    payload = transform_utils.create_transform_input(request.form)
+    transform_utils.insert_transform_record(payload)
     return redirect(url_for('transforms'))
 
 
@@ -52,7 +61,8 @@ def cluster_pools():
 @app.route('/transforms')
 def transforms():
     """Route to render transforms available"""
-    return render_template('transforms.html', data=[])
+    transforms_to_render = transform_utils.get_transforms_in_range()
+    return render_template('transforms.html', data=transforms_to_render)
 
 
 @app.route('/job_runs')

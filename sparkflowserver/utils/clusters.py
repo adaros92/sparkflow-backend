@@ -71,7 +71,6 @@ def delete_cluster_pool(request_form: dict) -> dict:
     return {"operation": "delete", "pool_id": pool_id, "emr_config": {}}
 
 
-
 def get_clusters_in_range(
         from_date: datetime = dates.get_today(), lookback_days: int = app.config["LOOKBACK_DAY_RANGE"],
         formatting: str = app.config["DATE_FORMAT"]) -> list:

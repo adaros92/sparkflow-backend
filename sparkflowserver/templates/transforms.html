@@ -25,10 +25,20 @@
                 <td>{{row["transform_id"]}}</td>
                 <td>{{row["transform_name"]}}</td>
                 <td>{{row["update_date"]}}</td>
-                <td><a href="#">Run</a> | <a href="#">Edit</a> | <a href="#">Delete</a> | <a href="#">Jobs</a></td>
+                <td><a href="#">Run</a> | <a href="#">Edit</a> | <a class="delete" href="{{ url_for('transforms') }}" id={{row["transform_id"]}}>Delete</a> | <a href="#">Jobs</a></td>
             </tr>
         {% endfor %}
       </tbody>
     </table>
 </div>
+<script type=text/javascript>
+  $('.delete').click(function(){
+    $.ajax({
+      type: 'POST',
+      url: "/delete_transform",
+      data: {"transform_id": $(this).attr('id')},
+      dataType: "text"
+    });
+  });
+</script>
 {% endblock %}
