@@ -54,6 +54,13 @@ def delete_transform_record(request_form: dict) -> list:
     return transform_database.delete_records(delete_payload)
 
 
+def get_transform_record(transform_id: str) -> dict:
+    """Retrieves the Dynamo record of an individual transform_id"""
+    transform_database = db.get_db(app.config["TRANSFORM_DB_TYPE"])()
+    transform_database.connect(app.config["TRANSFORM_DATABASE"])
+    return transform_database.get_record(keys={"transform_id": transform_id})[0]
+
+
 def get_transforms_in_range(
         from_date: datetime = dates.get_today(), lookback_days: int = app.config["LOOKBACK_DAY_RANGE"],
         formatting: str = app.config["DATE_FORMAT"]) -> list:

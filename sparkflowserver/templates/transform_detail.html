@@ -1,0 +1,47 @@
+{% extends "layout.html" %}
+{% block body %}
+{% for item in data %}
+<div class="row">
+    <div class="col-12">
+        <h3>{{item["transform_name"]}}</h3>
+    </div>
+</div>
+<br><br>
+<div class="row">
+    <div class="col-12">
+        <p><b>Last updated on:</b>: {{item["update_datetime"]}}</p>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        <p><b>Created on:</b>: {{item["creation_datetime"]}}</p>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        <p><b>Cluster pool:</b>: {{item["pool_id"]}}</p>
+    </div>
+</div>
+<br><br>
+<div class="row">
+    <div class="col-12">
+        <p><b>Jar</b>: {{item["jar_location"]}}</p>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        <p><b>Main class</b>: {{item["main_class"]}}</p>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        <p><b>Spark config</b>: {{item["app_config"]}}</p>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        <p><b>CLI arguments</b>: {{item["arguments"]}}</p>
+    </div>
+</div>
+{% endfor %}
+{% endblock %}

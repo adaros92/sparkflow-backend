@@ -12,19 +12,15 @@
         <tr>
             <th>ID</th>
             <th>Name</th>
-            <th>Start time</th>
-            <th>End time</th>
             <th>Status</th>
         </tr>
       </thead>
       <tbody>
         {% for row in data %}
             <tr>
-                <td>{{row["step_id"]}}</td>
+                <td>{{row["job_id"]}}</td>
                 <td>{{row["step_name"]}}</td>
-                <td>{{row["step_start"]}}</td>
-                <td>{{row["step_end"]}}</td>
-                <td>{{row["step_status"]}}</td>
+                <td>{{row["status"]}}</td>
             </tr>
         {% endfor %}
       </tbody>

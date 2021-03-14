@@ -15,6 +15,7 @@
         <tr>
             <th>ID</th>
             <th>Name</th>
+            <th>Cluster Pool</th>
             <th>Updated On</th>
             <th>Actions</th>
         </tr>
@@ -22,10 +23,11 @@
       <tbody>
         {% for row in data %}
             <tr>
-                <td>{{row["transform_id"]}}</td>
+                <td><a href="/transform_detail?transform_id={{row['transform_id']}}">{{row["transform_id"]}}</a></td>
                 <td>{{row["transform_name"]}}</td>
+                <td>{{row["pool_id"]}}</td>
                 <td>{{row["update_date"]}}</td>
-                <td><a href="#">Run</a> | <a href="#">Edit</a> | <a class="delete" href="{{ url_for('transforms') }}" id={{row["transform_id"]}}>Delete</a> | <a href="#">Jobs</a></td>
+                <td id={{row["transform_id"]}}><a class="run" href="/job_runs?transform_id={{row['transform_id']}}">Run</a> | <a href="#">Edit</a> | <a class="delete" href="{{ url_for('transforms') }}">Delete</a> | <a href="/job_runs?transform_id={{row['transform_id']}}">Jobs</a></td>
             </tr>
         {% endfor %}
       </tbody>
@@ -36,7 +38,16 @@
     $.ajax({
       type: 'POST',
       url: "/delete_transform",
-      data: {"transform_id": $(this).attr('id')},
+      data: {"transform_id": $(this).parent().attr('id')},
+      dataType: "text"
+    });
+  });
+
+  $('.run').click(function(){
+    $.ajax({
+      type: 'POST',
+      url: "/run_transform",
+      data: {"transform_id": $(this).parent().attr('id')},
       dataType: "text"
     });
   });

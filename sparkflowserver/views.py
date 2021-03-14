@@ -2,7 +2,7 @@ from flask import url_for, render_template, request, redirect
 from sparkflowtools.utils import aws_lambda
 
 from sparkflowserver import app
-from sparkflowserver.utils import clusters, transforms as transform_utils
+from sparkflowserver.utils import clusters, transforms as transform_utils, job_runs as job_run_utils
 
 
 @app.route('/delete_cluster', methods=['POST'])
@@ -58,6 +58,25 @@ def cluster_pools():
     return render_template('clusters.html', data=clusters_to_render)
 
 
+@app.route('/transform_detail')
+def transform_detail():
+    transform_id = request.args.get('transform_id')
+    data = transform_utils.get_transform_record(transform_id)
+    return render_template('transform_detail.html', data=[data])
+
+
+@app.route('/run_transform', methods=['POST'])
+def run_transform():
+    """Route to create a new transform"""
+    transform_id = request.form["transform_id"]
+    transform_record = transform_utils.get_transform_record(transform_id)
+    payload = job_run_utils.create_job_payload(transform_record)
+    print(payload)
+    lambda_arn = app.config["STEP_MANAGER_LAMBDA"]
+    aws_lambda.invoke_function(lambda_arn, payload)
+    return redirect(url_for('job_runs', transform_id=transform_id))
+
+
 @app.route('/transforms')
 def transforms():
     """Route to render transforms available"""
@@ -68,11 +87,13 @@ def transforms():
 @app.route('/job_runs')
 def job_runs():
     """Route to render transform executions"""
-    return render_template('job_runs.html', data=[])
+    transform_id = request.args.get('transform_id')
+    data = job_run_utils.get_job_runs_for_transform_id(transform_id)
+    return render_template('job_runs.html', data=data)
 
 
 @app.route('/')
 @app.route('/index.html')
 def index():
     """Route for landing page"""
-    return render_template('transforms.html')
+    return redirect(url_for('transforms'))

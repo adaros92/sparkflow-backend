@@ -11,7 +11,19 @@
         <input type="text" class="form-control" name="clusterName" id="clusterName" placeholder="Enter a name for the pool">
       </div>
     </div>
-    <div class="col-4 my-1">
+    <div class="col-2 my-1">
+      <label class="mr-sm-2" for="fleetType">Fleet Type</label>
+      <select class="custom-select mr-sm-2" name="fleetType" id="fleetType">
+        <option selected value="nano">nano</option>
+        <option value="tiny">tiny</option>
+        <option value="small">small</option>
+        <option value="standard">standard</option>
+        <option value="medium">medium</option>
+        <option value="large">large</option>
+        <option value="huge">huge</option>
+      </select>
+    </div>
+    <div class="col-2 my-1">
       <div class="form-group">
         <label for="clusterCount">Cluster count</label>
         <input type="number" name="clusterCount" class="form-control" id="clusterCount" placeholder="# of clusters" min="1" max="25" value="1">
@@ -23,9 +35,9 @@
     <div class="col-auto my-1">
       <label class="mr-sm-2" for="emrReleaseLabel">EMR release label</label>
       <select class="custom-select mr-sm-2" name="emrReleaseLabel" id="emrReleaseLabel">
-        <option selected value="emr-5.32.0">emr-5.32.0</option>
+        <option value="emr-5.32.0">emr-5.32.0</option>
         <option value="emr-5.31.0">emr-5.31.0</option>
-        <option value="emr-6.2.0">emr-6.2.0</option>
+        <option selected value="emr-6.2.0">emr-6.2.0</option>
       </select>
       <small id="releaseHelp" class="form-text text-muted">See https://tinyurl.com/fcwbwavd</small>
     </div>

@@ -40,14 +40,16 @@ def create_cluster_input(request_form: dict) -> dict:
                 "ReleaseLabel": request_form["emrReleaseLabel"],
                 "Applications": applications,
                 "Ec2InstanceAttributes": {
-                    "Ec2KeyName": "mykey5.pem",
-                    "Ec2SubnetId": "subnet-f72b0bf8",
+                    "Ec2KeyName": request_form["ec2KeyName"],
+                    "Ec2SubnetId": request_form["ec2SubnetId"],
                     "Ec2AvailabilityZone": request_form["availabilityZone"],
                     "IamInstanceProfile": request_form["ec2InstanceProfile"],
-                    "EmrManagedMasterSecurityGroup": "sg-00888c4bd2e63f00f",
-                    "EmrManagedSlaveSecurityGroup": "sg-06e7f80706c55ed8d"
+                    "EmrManagedMasterSecurityGroup": request_form["driverSecurityGroup"],
+                    "EmrManagedSlaveSecurityGroup": request_form["executorSecurityGroup"]
                 },
-                "Tags": [{"Key": "environment", "Value":  "experimental"}],
+                "Tags": [
+                    {"Key": "fleet_type", "Value": request_form["fleetType"]}
+                ],
                 "AutoTerminate": auto_terminate,
                 "TerminationProtected": termination_protection,
                 "Configurations": [],
@@ -74,6 +76,13 @@ def delete_cluster_pool(request_form: dict) -> dict:
 def get_clusters_in_range(
         from_date: datetime = dates.get_today(), lookback_days: int = app.config["LOOKBACK_DAY_RANGE"],
         formatting: str = app.config["DATE_FORMAT"]) -> list:
+    """Retrieves a list of EMR cluster Dynamo records within the lookback range from the given date
+
+    :param from_date the end date in the range
+    :param lookback_days the number of days to lookback fro mthe end date
+    :param formatting what formatting to apply to the dates in the range
+    :returns a list of Dynamo records with cluster information for those clusters last updated within the date range
+    """
     date_range = dates.get_string_date_range(lookback_days, from_date + timedelta(days=1), formatting)
     cluster_pool_database = db.get_db(app.config["CLUSTER_POOL_DB_TYPE"])()
     cluster_pool_database.connect(app.config["CLUSTER_POOL_DATABASE"])
