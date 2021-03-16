@@ -71,7 +71,6 @@ def run_transform():
     transform_id = request.form["transform_id"]
     transform_record = transform_utils.get_transform_record(transform_id)
     payload = job_run_utils.create_job_payload(transform_record)
-    print(payload)
     lambda_arn = app.config["STEP_MANAGER_LAMBDA"]
     aws_lambda.invoke_function(lambda_arn, payload)
     return redirect(url_for('job_runs', transform_id=transform_id))

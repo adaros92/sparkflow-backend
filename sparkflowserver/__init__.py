@@ -3,8 +3,8 @@ from flask import Flask
 
 app = Flask(__name__)
 
-app.config["CLUSTER_CREATION_LAMBDA"] = "arn:aws:lambda:us-east-1:146066720211:function:sparkflow-lambdas-ClusterManagerFunction-S2C973FG0OT8"
-app.config["STEP_MANAGER_LAMBDA"] = "arn:aws:lambda:us-east-1:146066720211:function:sparkflow-lambdas-StepManagerFunction-1COJ4B13N1UTK"
+app.config["CLUSTER_CREATION_LAMBDA"] = "SparkflowClusterManager"
+app.config["STEP_MANAGER_LAMBDA"] = "SparkflowStepManager"
 app.config["CLUSTER_POOL_DB_TYPE"] = "DYNAMO"
 app.config["CLUSTER_POOL_DATABASE"] = "sparkflow_cluster_pools"
 app.config["TRANSFORM_DB_TYPE"] = "DYNAMO"
